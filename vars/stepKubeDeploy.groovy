@@ -1,6 +1,7 @@
 def call(String DeployName,int port,String imageName){
-       String  Image = imageName
+       String  Image = imageName.toLowerCase()
 sh """ echo "updating Deployfile"
+       cp AIDReact/Deploy.yaml .
        yq eval -i \'.spec.template.spec.containers[0].image = "${Image}:${env.BUILD_NUMBER}"\' Deploy.yaml
        yq eval -i \'.metadata.name = "${DeployName}"\' Deploy.yaml """
     script {
